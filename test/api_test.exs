@@ -1,5 +1,5 @@
 defmodule ApiTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: false
 
   @statistics_endpoint "http://localhost:4000/statistics"
 

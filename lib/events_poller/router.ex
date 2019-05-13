@@ -1,6 +1,8 @@
 defmodule EventsPoller.Router do
   use Plug.Router
 
+  alias EventsPoller.StatisticAgent
+
   plug(:match)
   plug(:dispatch)
 
@@ -8,8 +10,13 @@ defmodule EventsPoller.Router do
   get("/favicon", do: send_resp(conn, 200, ""))
 
   get "/statistics" do
+    data = StatisticAgent.get 
+           |> prepare_response 
+           |> Poison.encode!
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(200, Poison.encode!(%{data: %{num_of_repos: 0, num_of_events: 3}}))
+    |> send_resp(200, data)
   end
+
+  defp prepare_response(data), do: %{data: data}
 end

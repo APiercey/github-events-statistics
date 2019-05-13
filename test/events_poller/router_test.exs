@@ -1,23 +1,23 @@
 defmodule RouterTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: false
   use Plug.Test
 
-  alias EventsPoller.{Router, EventsDatabase}
+  alias EventsPoller.{Router, EventsDatabase, StatisticAgent, Statistics}
+
+  setup_all do
+    {:ok, _pid} = StatisticAgent.start_link(%Statistics{})
+    :ok
+  end
 
   describe "GET [200] /statistics" do
     test "returns number of events" do
-      EventsDatabase.insert_event(%{"id" => "id"})
-      EventsDatabase.insert_event(%{"id" => "id"})
-      assert %{num_events: 2} = get()
+      StatisticAgent.record(%Statistics{num_of_events: 20})
+      assert %{"num_of_events" => 20} = get()
     end
 
-    test "provides correct number of events over time" do
-      EventsDatabase.insert_event(%{"id" => "id"})
-      assert %{num_events: 1} = get()
-
-      EventsDatabase.insert_event(%{"id" => "id"})
-      EventsDatabase.insert_event(%{"id" => "id"})
-      assert %{num_events: 3} = get()
+    test "returns number of repos" do
+      StatisticAgent.record(%Statistics{num_of_repos: 3})
+      assert %{"num_of_repos" => 3} = get()
     end
 
     defp get() do

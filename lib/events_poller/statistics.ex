@@ -1,7 +1,3 @@
 defmodule EventsPoller.Statistics do
-  defstruct [:num_of_events, :num_of_repos]
-
-  def capture do
-    %__MODULE__{num_of_events: 3}
-  end
+  defstruct [num_of_events: 0, num_of_repos: 0]
 end
