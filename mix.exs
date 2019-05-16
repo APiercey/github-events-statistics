@@ -6,8 +6,17 @@ defmodule GhEvents.MixProject do
       app: :gh_events,
       version: "0.1.0",
       elixir: "~> 1.7",
+      elixirc_paths: elixirc_paths(Mix.env()),
+      aliases: aliases(),
       start_permanent: Mix.env() == :prod,
       deps: deps()
+    ]
+  end
+
+  defp aliases do
+    [
+      test: "test --no-start",
+      test_watch: "test.watch --no-start"
     ]
   end
 
@@ -32,4 +41,7 @@ defmodule GhEvents.MixProject do
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 end

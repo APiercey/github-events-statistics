@@ -7,7 +7,7 @@ defmodule EventsPoller.Router do
   plug(:dispatch)
 
   get("/hcheck", do: send_resp(conn, 200, "200 OK"))
-  get("/favicon", do: send_resp(conn, 200, ""))
+  get("/favicon.ico", do: send_resp(conn, 200, ""))
 
   get "/statistics" do
     data = StatisticAgent.get 

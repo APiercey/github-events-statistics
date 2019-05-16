@@ -12,7 +12,7 @@ defmodule EventsPoller.Client do
   end
 
   def poll(%Config{url: url}) do
-    events = 1..100 |> Enum.map(fn id -> %{"id" => id, "payload" => %{"test" => "hello"}} end)
+    events = 1..100000 |> Enum.map(fn id -> %{"id" => id, "payload" => %{"test" => "hello"}} end)
     {:ok, events}
   end
 end

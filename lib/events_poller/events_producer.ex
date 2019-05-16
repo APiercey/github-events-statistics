@@ -11,10 +11,6 @@ defmodule EventsPoller.EventsProducer do
     {:producer, %{events: []}}
   end
 
-  def handle_info(msg, state) do
-    IO.inspect(msg)
-  end
-
   def handle_demand(demand, state) do
     events =
       if length(state.events) >= demand do
@@ -22,9 +18,6 @@ defmodule EventsPoller.EventsProducer do
       else
         state.events ++ fetch_events()
       end
-
-    :timer.sleep(500)
-    IO.inspect("demand!")
 
     {to_dispatch, remaining} = Enum.split(events, demand)
 
