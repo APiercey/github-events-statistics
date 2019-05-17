@@ -10,6 +10,10 @@ defmodule GhEvents.ApiAcceptanceCase do
 
   setup_all do
     :ok = Application.start(:gh_events)
+
+    on_exit(fn -> 
+      :ok = Application.stop(:gh_events) 
+    end)
     :ok
   end
 

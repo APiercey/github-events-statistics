@@ -16,14 +16,15 @@ defmodule GhEvents.MixProject do
   defp aliases do
     [
       test: "test --no-start",
-      test_watch: "test.watch --no-start"
+      "test.watch": "test.watch --no-start",
+      "db.setup": ["db.create", "db.migrate"]
     ]
   end
 
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :mnesia],
       mod: {GhEvents.Application, []}
     ]
   end
