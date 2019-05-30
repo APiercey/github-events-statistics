@@ -17,7 +17,7 @@ defmodule Mix.Tasks.Db.Migrate do
   end
 
   defp migrate do
-    case Mnesia.create_table(Event, [attributes: [:id, :type]]) do
+    case Mnesia.create_table(Event, [attributes: [:id, :data]]) do
       {:atomic, :ok} -> :ok
       {:aborted, {:already_exists, Event}} -> :ok
     end

@@ -5,8 +5,9 @@ defmodule EventsPoller.DatabaseTest do
 
   describe "insert/1" do
     test "successfully adds an events" do
-      assert {:ok, %{id: "gh9uh", type: "Repo.Created"}} 
-        = %{id: "gh9uh", type: "Repo.Created"} |> Database.insert()
+      data = %{type: "Repo.Created"}
+
+      assert :ok = {"gh9uh", data} |> Database.insert()
     end
   end
 
@@ -16,10 +17,11 @@ defmodule EventsPoller.DatabaseTest do
     end
 
     test "return correct events" do
-      expected = %{id: "hh87as", type: "Repo.Updated"}
-      {:ok, _} = expected |> Database.insert
+      {id, data} = expected = {"hh87as", %{type: "Repo.Updated"}}
 
-      assert {:ok, [^expected]} = Database.all()
+      :ok = expected |> Database.insert
+
+      assert {:ok, [{Event, ^id, ^data}]} = Database.all()
     end
   end
 end
